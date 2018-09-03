@@ -14,6 +14,16 @@ public class App {
         reverseInputString();
 
         //Task#3
+        Deque deque = new Deque(5);
+        deque.insertLeft(2);
+        deque.insertLeft(5);
+        deque.insertRight(6);
+        deque.insertRight(7);
+        deque.insertRight(1);
+
+        System.out.println(deque.removeLeft());
+        System.out.println(deque.removeRight());
+
 
 
         //Task#4
