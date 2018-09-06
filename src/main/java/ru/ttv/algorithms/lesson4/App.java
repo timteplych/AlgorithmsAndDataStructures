@@ -9,9 +9,8 @@ public class App {
         doubleLinkedList.insert(new Cat(2,"Pepsi"));
         doubleLinkedList.insert(new Cat(10,"Murka"));
         doubleLinkedList.insert(new Cat(1,"Zhuchka"));
-        System.out.println(doubleLinkedList);
-
-        doubleLinkedList.delete("Pepsi");
+        doubleLinkedList.insert(new Cat(1,"Mashcka"));
+        doubleLinkedList.insert(new Cat(1,"Nessi"));
         System.out.println(doubleLinkedList);
 
         doubleLinkedList.remove();
@@ -20,7 +19,10 @@ public class App {
 
         Iterator<Cat> catIterator = doubleLinkedList.iterator();
         while (catIterator.hasNext()){
-            System.out.println(catIterator.next());
+            Cat currentCat = catIterator.next();
+            if(currentCat.getName().equals("Murka")) {
+                catIterator.remove();
+            }
         }
     }
 }

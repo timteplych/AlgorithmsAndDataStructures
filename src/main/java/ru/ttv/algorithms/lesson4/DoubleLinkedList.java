@@ -26,23 +26,27 @@ public class DoubleLinkedList<T>{
 
     private class Itr implements Iterator<T> {
         Node<T> cursor = head;       // index of next element to return
+        Node<T> lastReturned;
 
         public boolean hasNext() {
             return cursor != null;
         }
 
         public T next() {
-            T temp = cursor.c;
+            lastReturned = cursor;
             cursor = cursor.next;
-            return temp;
+            return lastReturned.c;
         }
 
         public void remove() {
             if (isEmpty())
                 throw  new IndexOutOfBoundsException();
-            cursor.prev.next = cursor.next;
-            cursor.next.prev = cursor.prev;
-            cursor = cursor.next;
+            if(lastReturned.prev != null) lastReturned.prev.next = lastReturned.next;
+            if(lastReturned.next != null) lastReturned.next.prev = lastReturned.prev;
+            cursor = lastReturned.next;
+            head = cursor.prev;
+            lastReturned.next = null;
+            lastReturned.prev = null;
         }
         public void forEachRemaining(Consumer<? super T> action) {
             Objects.requireNonNull(action);
@@ -67,11 +71,11 @@ public class DoubleLinkedList<T>{
 
     public void insert(T c) {
         Node<T> n = new Node<>(c);
-        n.next = head; // if (head == null) n.next = null;
-        if(head == null){
-            n.prev = null;
-        }else
-            n.prev = head.prev;
+         // if (head == null) n.next = null;
+        if(head != null){
+            n.next = head;
+            n.next.prev = n;
+        }
         head = n;
     }
 
@@ -99,24 +103,6 @@ public class DoubleLinkedList<T>{
         return true;
     }
 
-    public T delete(String name) {
-        Node<T> current = head;
-        Node<T> previous = head;
-        while (!(((Cat)current.c).getName()).equals(name)) {
-            if (current.next == null)
-                return null;
-            else {
-                previous = current;
-                current = current.next;
-            }
-        }
-        if (current == head)
-            head = head.next;
-        else
-            previous.next = current.next;
-
-        return current.c;
-    }
 
     @Override
     public String toString() {
