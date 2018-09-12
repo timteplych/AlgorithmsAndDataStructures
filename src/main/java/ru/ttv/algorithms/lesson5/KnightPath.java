@@ -12,33 +12,38 @@ public class KnightPath {
     }
 
     public int[][] getResultDesk() {
-        findPath(0,0,1);
+        findPath(1,0,1);
         return desk;
     }
 
     private boolean findPath(int currentX, int currentY, int moveNumber){
-        if(moveNumber > MAX_MOVES){
+        int nextX, nextY;
+        desk[currentX][currentY] = moveNumber;
+        if(moveNumber > MAX_MOVES-1){
             return true;
         }
-        desk[currentX][currentY] = moveNumber;
+
         for (int i = 0; i < 8; i++) {
-            int nextX = currentX + POSSIBLE_MOVES[i][0];
-            int nextY = currentY + POSSIBLE_MOVES[i][1];
+            nextX = currentX + POSSIBLE_MOVES[i][1];
+            nextY = currentY + POSSIBLE_MOVES[i][0];
             if( movePossible(nextX,nextY) && findPath(nextX, nextY,++moveNumber)){
                 return true;
             }
         }
+        desk[currentX][currentY] = 0;
         return false;
     }
 
     private boolean movePossible(int nextX, int nextY) {
-        if(nextX<0 || nextX > 7 || nextY < 0 || nextY > 7){
+        /*if(nextX<0 || nextX > 7 || nextY < 0 || nextY > 7){
             return false;
         }
         if(desk[nextX][nextY] == 0){
             return true;
         }
         return false;
+        */
+        return nextX>=0 && nextX<8 && nextY>=0 && nextY<8 && desk[nextX][nextY]==0;
     }
 
 }
