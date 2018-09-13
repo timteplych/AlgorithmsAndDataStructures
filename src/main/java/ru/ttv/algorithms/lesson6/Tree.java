@@ -15,6 +15,8 @@ public class Tree {
     }
 
     TreeNode root;
+    private  int leftLevel;
+    private  int rightLevel;
 
     public Cat find(int age) {
         TreeNode current = root;
@@ -140,6 +142,17 @@ public class Tree {
     }
 
     public boolean isBalanced(){
-        return true;
+        return countLevels(root.left) == countLevels(root.right);
+    }
+
+    private int countLevels(TreeNode current) {
+        if (current != null) {
+            int leftLevels = countLevels(current.left);
+            int rightLevels = countLevels(current.right);
+            int max = Math.max(leftLevels,rightLevels);
+            return ++max;
+
+        }
+        return 0;
     }
 }

@@ -1,11 +1,10 @@
 package ru.ttv.algorithms.lesson6;
 
-import javax.swing.tree.TreeNode;
 import java.util.Random;
 
 public class App {
     public static void main(String[] args) {
-        int amountTrees = 20;
+        int amountTrees = 200;
         Random random = new Random();
         Tree[] arrayTree = new Tree[amountTrees];
         for (int i = 0; i < amountTrees; i++) {
