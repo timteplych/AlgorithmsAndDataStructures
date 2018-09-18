@@ -3,6 +3,8 @@ package ru.ttv.algorithms.lesson7;
 import ru.ttv.algorithms.lesson3.Queue;
 import ru.ttv.algorithms.lesson3.Stack;
 
+import java.util.Arrays;
+
 public class Graph {
     private class Vertex {
         public char label;
@@ -23,9 +25,11 @@ public class Graph {
     private Vertex[] vertices;
     private int[][] adjMatrix;
     private int size;
+    private int[] dist;
+    private int[] parent;
 
     public Graph(int maxSize) {
-        this.MAX_VERTICES = size;
+        this.MAX_VERTICES = maxSize;
         vertices = new Vertex[MAX_VERTICES];
         adjMatrix = new int[MAX_VERTICES][MAX_VERTICES];
         size = 0;
@@ -44,12 +48,7 @@ public class Graph {
         System.out.println(vertices[vertex]);
     }
 
-    private int getUnvisitedVertex(int ver){
-        for (int i = 0; i < size; i++) {
-            if(adjMatrix[ver][i] == 1 && !vertices[i].wasVisited) return i;
-        }
-        return -1;
-    }
+
 
     public void depthTraverse(){
         Stack stack = new Stack(MAX_VERTICES);
@@ -90,6 +89,46 @@ public class Graph {
         for (int i = 0; i < size; i++) {
             vertices[i].wasVisited = false;
         }
+    }
+    private int getUnvisitedVertex(int ver){
+        for (int i = 0; i < size; i++) {
+            if(adjMatrix[ver][i] == 1 && !vertices[i].wasVisited) return i;
+        }
+        return -1;
+    }
+
+    public void getShortPath(){
+        Queue queue = new Queue(MAX_VERTICES);
+        dist = new int[MAX_VERTICES];
+        parent = new int[MAX_VERTICES];
+        int inf = Integer.MAX_VALUE/2;
+        Arrays.fill(dist,inf);
+        dist[0] = 0;
+        parent[0] = 0;
+        vertices[0].wasVisited = true;
+        //showVertex(0);
+        queue.insert(0);
+        while (!queue.isEmpty()){
+            int vCurr = queue.remove();
+            int vNext;
+            while ((vNext = getUnvisitedVertex(vCurr)) != -1){
+                vertices[vNext].wasVisited = true;
+                if(dist[vNext] > dist[vCurr] + 1){
+                    //showVertex(vNext);
+                    dist[vNext] = dist[vCurr]+1;
+                    parent[vNext] = vCurr;
+                    queue.insert(vNext);
+                }
+            }
+        }
+        resetFlags();
+    }
+
+    public void showShortPath(int vertex){
+        if (parent[vertex] != vertex) {
+            showShortPath(parent[vertex]);
+        }
+        System.out.printf("%d ",vertex);
     }
 
 

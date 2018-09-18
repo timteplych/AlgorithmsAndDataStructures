@@ -25,5 +25,8 @@ public class App {
         graph.addEdge(6,8);
         graph.addEdge(6,9);
         graph.addEdge(7,9);
+
+        graph.getShortPath();
+        graph.showShortPath(8);
     }
 }
