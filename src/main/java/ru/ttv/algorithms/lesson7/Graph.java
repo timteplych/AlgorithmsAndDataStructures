@@ -97,7 +97,7 @@ public class Graph {
         return -1;
     }
 
-    public void getShortPath(){
+    public void calcShortPath(){
         Queue queue = new Queue(MAX_VERTICES);
         dist = new int[MAX_VERTICES];
         parent = new int[MAX_VERTICES];
